@@ -2,6 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Feather } from "@expo/vector-icons";
+import { NativeBaseProvider } from "native-base";
 
 import HomeScreen from "./src/screens/HomeScreen";
 import NewsScreen from "./src/screens/NewsScreen";
@@ -11,34 +12,31 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              let iconName;
 
-            if (route.name === "Home") {
-              iconName = focused ? "home" : "home";
-            } else if (route.name === "News") {
-              iconName = focused ? "file-text" : "file-text";
-            } else if (route.name === "Weather") {
-              iconName = focused ? "cloud" : "cloud";
-            }
+              if (route.name === "Home") {
+                iconName = "home";
+              } else if (route.name === "News") {
+                iconName = "book-open";
+              } else if (route.name === "Weather") {
+                iconName = "cloud";
+              }
 
-            // You can return any component that you like here!
-            return <Feather name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: "tomato",
-          tabBarInactiveTintColor: "gray",
-          tabBarStyle: {
-            backgroundColor: "#fff",
-            display: "flex",
-          },
-        })}>
-        <Tab.Screen name='Home' component={HomeScreen} />
-        <Tab.Screen name='News' component={NewsScreen} />
-        <Tab.Screen name='Weather' component={WeatherScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              return <Feather name={iconName} size={size} color={color} />;
+            },
+            activeTintColor: "tomato",
+            inactiveTintColor: "gray",
+          })}>
+          <Tab.Screen name='Home' component={HomeScreen} />
+          <Tab.Screen name='News' component={NewsScreen} />
+          <Tab.Screen name='Weather' component={WeatherScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }
