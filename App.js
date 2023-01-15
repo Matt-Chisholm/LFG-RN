@@ -28,11 +28,13 @@ export default function App() {
             // You can return any component that you like here!
             return <Feather name={iconName} size={size} color={color} />;
           },
-        })}
-        tabBarOptions={{
-          activeTintColor: "tomato",
-          inactiveTintColor: "gray",
-        }}>
+          tabBarActiveTintColor: "tomato",
+          tabBarInactiveTintColor: "gray",
+          tabBarStyle: {
+            backgroundColor: "#fff",
+            display: "flex",
+          },
+        })}>
         <Tab.Screen name='Home' component={HomeScreen} />
         <Tab.Screen name='News' component={NewsScreen} />
         <Tab.Screen name='Weather' component={WeatherScreen} />
