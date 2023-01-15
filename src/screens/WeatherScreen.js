@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-export default function Weather() {
+export default function WeatherScreen() {
   return (
     <View>
       <Text>Weather</Text>

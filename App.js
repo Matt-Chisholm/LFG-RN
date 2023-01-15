@@ -1,48 +1,41 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Feather } from "@expo/vector-icons";
 
 import HomeScreen from "./src/screens/HomeScreen";
 import NewsScreen from "./src/screens/NewsScreen";
 import WeatherScreen from "./src/screens/WeatherScreen";
 
-const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
-function HomeStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name='Home' component={HomeScreen} />
-    </Stack.Navigator>
-  );
-}
-
-function NewsStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name='News' component={NewsScreen} />
-    </Stack.Navigator>
-  );
-}
-
-function WeatherStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name='Weather' component={WeatherScreen} />
-    </Stack.Navigator>
-  );
-}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name='Home' component={HomeStack} />
-        <Tab.Screen name='News' component={NewsStack} />
-        <Tab.Screen name='Weather' component={WeatherStack} />
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === "Home") {
+              iconName = focused ? "home" : "home";
+            } else if (route.name === "News") {
+              iconName = focused ? "file-text" : "file-text";
+            } else if (route.name === "Weather") {
+              iconName = focused ? "cloud" : "cloud";
+            }
+
+            // You can return any component that you like here!
+            return <Feather name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "tomato",
+          inactiveTintColor: "gray",
+        }}>
+        <Tab.Screen name='Home' component={HomeScreen} />
+        <Tab.Screen name='News' component={NewsScreen} />
+        <Tab.Screen name='Weather' component={WeatherScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
