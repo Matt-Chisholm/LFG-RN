@@ -22,7 +22,6 @@ export default function NewsScreen() {
     axios
       .get(url)
       .then((response) => {
-        console.log(response.data);
         setNews(response.data.articles);
       })
       .catch((error) => {
