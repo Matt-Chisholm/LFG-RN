@@ -3,6 +3,7 @@ import React from "react";
 import * as Location from "expo-location";
 import axios from "axios";
 import { WEATHER_KEY } from "@env";
+import { Feather } from "@expo/vector-icons";
 
 export default function WeatherScreen() {
   const [location, setLocation] = React.useState(null);
@@ -17,7 +18,6 @@ export default function WeatherScreen() {
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
       setLocation(location);
     })();
   }, []);
@@ -28,7 +28,6 @@ export default function WeatherScreen() {
       axios
         .get(url)
         .then((response) => {
-          console.log(response.data);
           setWeatherData(response.data);
         })
         .catch((error) => {
@@ -42,6 +41,35 @@ export default function WeatherScreen() {
     return Math.round(kelvin - 273.15);
   };
 
+  const getWeatherIcon = (weather) => {
+    switch (weather) {
+      case "Clouds":
+        return <Feather name='cloud' size={24} color='black' />;
+      case "Clear":
+        return <Feather name='sun' size={24} color='black' />;
+      case "Rain":
+        return <Feather name='cloud-rain' size={24} color='black' />;
+      case "Snow":
+        return <Feather name='cloud-snow' size={24} color='black' />;
+      case "Thunderstorm":
+        return <Feather name='cloud-lightning' size={24} color='black' />;
+      case "Drizzle":
+        return <Feather name='cloud-drizzle' size={24} color='black' />;
+      case "Mist":
+        return <Feather name='cloud-drizzle' size={24} color='black' />;
+      case "Smoke":
+        return <Feather name='cloud-drizzle' size={24} color='black' />;
+      case "Haze":
+        return <Feather name='cloud-drizzle' size={24} color='black' />;
+      case "Dust":
+        return <Feather name='cloud-drizzle' size={24} color='black' />;
+      case "Fog":
+        return <Feather name='cloud-drizzle' size={24} color='black' />;
+      default:
+        return <Feather name='cloud' size={24} color='black' />;
+    }
+  };
+
   return (
     <View>
       <Text>Weather</Text>
@@ -50,6 +78,7 @@ export default function WeatherScreen() {
         <View>
           <Text>{weatherData.name}</Text>
           <Text>{weatherData.weather[0].description}</Text>
+          {getWeatherIcon(weatherData.weather[0].main)}
           <Text>{kelvinToCelsius(weatherData.main.temp)}°C</Text>
         </View>
       )}
