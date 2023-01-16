@@ -70,6 +70,28 @@ export default function WeatherScreen() {
     }
   };
 
+  const windDirection = (deg) => {
+    if (deg > 337.5) {
+      return "North";
+    } else if (deg > 292.5) {
+      return "North West";
+    } else if (deg > 247.5) {
+      return "West";
+    } else if (deg > 202.5) {
+      return "South West";
+    } else if (deg > 157.5) {
+      return "South";
+    } else if (deg > 122.5) {
+      return "South East";
+    } else if (deg > 67.5) {
+      return "East";
+    } else if (deg > 22.5) {
+      return "North East";
+    } else {
+      return "North";
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your local weather : </Text>
@@ -81,6 +103,9 @@ export default function WeatherScreen() {
             {weatherData.weather[0].description[0].toUpperCase() +
               weatherData.weather[0].description.slice(1)}
           </Text>
+          <Text>{`Wind: ${weatherData.wind.speed} ${windDirection(
+            weatherData.wind.deg
+          )}`}</Text>
           {getWeatherIcon(weatherData.weather[0].main)}
           <Text style={styles.temp}>
             {kelvinToCelsius(weatherData.main.temp)}°C
