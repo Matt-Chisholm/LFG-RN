@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import React from "react";
 import * as Location from "expo-location";
 import axios from "axios";
@@ -71,17 +71,55 @@ export default function WeatherScreen() {
   };
 
   return (
-    <View>
-      <Text>Weather</Text>
-      {errorMsg && <Text>{errorMsg}</Text>}
+    <View style={styles.container}>
+      <Text style={styles.title}>Your local weather : </Text>
+      {errorMsg && <Text style={styles.error}>{errorMsg}</Text>}
       {weatherData && (
-        <View>
-          <Text>{weatherData.name}</Text>
-          <Text>{weatherData.weather[0].description}</Text>
+        <View style={styles.weather_container}>
+          <Text style={styles.weather_title}>{weatherData.name}</Text>
+          <Text style={styles.description}>
+            {weatherData.weather[0].description[0].toUpperCase() +
+              weatherData.weather[0].description.slice(1)}
+          </Text>
           {getWeatherIcon(weatherData.weather[0].main)}
-          <Text>{kelvinToCelsius(weatherData.main.temp)}°C</Text>
+          <Text style={styles.temp}>
+            {kelvinToCelsius(weatherData.main.temp)}°C
+          </Text>
         </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  weather_container: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  weather_title: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  description: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  temp: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  error: {
+    color: "red",
+  },
+});
