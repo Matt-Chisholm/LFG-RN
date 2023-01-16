@@ -1,17 +1,25 @@
-import { View, Text, StyleSheet, Button } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  TextInput,
+  ActivityIndicator,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import axios from "axios";
 import { WEATHER_KEY } from "@env";
 import { Feather } from "@expo/vector-icons";
 
 export default function WeatherScreen() {
-  const [location, setLocation] = React.useState(null);
-  const [weatherData, setWeatherData] = React.useState(null);
-  const [errorMsg, setErrorMsg] = React.useState(null);
+  const [location, setLocation] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [search, setSearch] = useState("");
 
-  React.useEffect(() => {
-    (async () => {
+  useEffect(() => {
+    async function fetchLocation() {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
@@ -19,22 +27,23 @@ export default function WeatherScreen() {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-    })();
+    }
+    fetchLocation();
   }, []);
 
-  React.useEffect(() => {
-    if (location) {
+  useEffect(() => {
+    async function fetchWeather() {
+      if (!location) return;
       const url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=${WEATHER_KEY}`;
-      axios
-        .get(url)
-        .then((response) => {
-          setWeatherData(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-          setErrorMsg(error);
-        });
+      try {
+        const response = await axios.get(url);
+        setWeatherData(response.data);
+      } catch (error) {
+        console.log(error);
+        setErrorMsg(error);
+      }
     }
+    fetchWeather();
   }, [location]);
 
   const kelvinToCelsius = (kelvin) => {
@@ -92,17 +101,37 @@ export default function WeatherScreen() {
     }
   };
 
-  const refreshWeather = () => {
-    setLocation(null);
-    setLocation(location);
+  const searchWeather = (city) => {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_KEY}`;
+    axios
+      .get(url)
+      .then((response) => {
+        setWeatherData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrorMsg(error);
+      });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Your local weather : </Text>
+      <Text style={styles.title}>Search for a city</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => setSearch(text)}
+        placeholder='City'
+      />
+      <Button
+        title='Search'
+        onPress={() => searchWeather(search)}
+        style={{ marginBottom: 20 }}
+      />
       {errorMsg && <Text style={styles.error}>{errorMsg}</Text>}
+      {!weatherData && <ActivityIndicator size='large' color='#0000ff' />}
       {weatherData && (
         <View style={styles.weather_container}>
+          {search === "" && <Text style={styles.title}>Current Location</Text>}
           <Text style={styles.weather_title}>{weatherData.name}</Text>
           <Text style={styles.description}>
             {weatherData.weather[0].description[0].toUpperCase() +
@@ -117,7 +146,6 @@ export default function WeatherScreen() {
           </Text>
         </View>
       )}
-      <Button title='Refresh' onPress={refreshWeather} />
     </View>
   );
 }
@@ -137,6 +165,7 @@ const styles = StyleSheet.create({
   weather_container: {
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 30,
   },
   weather_title: {
     fontSize: 30,
@@ -152,5 +181,12 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
+  },
+  input: {
+    height: 40,
+    width: 200,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
