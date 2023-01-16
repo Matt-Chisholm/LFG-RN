@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import React from "react";
 import * as Location from "expo-location";
 import axios from "axios";
@@ -92,6 +92,11 @@ export default function WeatherScreen() {
     }
   };
 
+  const refreshWeather = () => {
+    setLocation(null);
+    setLocation(location);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Your local weather : </Text>
@@ -112,6 +117,7 @@ export default function WeatherScreen() {
           </Text>
         </View>
       )}
+      <Button title='Refresh' onPress={refreshWeather} />
     </View>
   );
 }
