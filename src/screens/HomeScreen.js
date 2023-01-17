@@ -2,6 +2,16 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 
 export default function HomeScreen() {
+  const getCurrentDate = () => {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    //Alert.alert(date + '-' + month + '-' + year);
+    // You can turn it in to your desired format
+    return date + "-" + month + "-" + year; //format: d-m-y;
+  };
+
   return (
     <View>
       <Text style={styles.header}>Welcome to Victoria Weather & News App</Text>
