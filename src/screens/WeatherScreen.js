@@ -137,7 +137,9 @@ export default function WeatherScreen() {
       {weatherData && (
         <View style={styles.weather_container}>
           {search === "" && <Text style={styles.title}>Current Location</Text>}
-          <Text style={styles.weather_title}>{weatherData.name}</Text>
+          <Text style={styles.weather_title}>
+            {weatherData.name} {getWeatherIcon(weatherData.weather[0].main)}
+          </Text>
           <Text style={styles.description}>
             {weatherData.weather[0].description[0].toUpperCase() +
               weatherData.weather[0].description.slice(1)}
@@ -145,7 +147,6 @@ export default function WeatherScreen() {
           <Text>{`Wind: ${weatherData.wind.speed} ${windDirection(
             weatherData.wind.deg
           )}`}</Text>
-          {getWeatherIcon(weatherData.weather[0].main)}
           <Text style={styles.temp}>
             {kelvinToCelsius(weatherData.main.temp)}°C
           </Text>
@@ -161,6 +162,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#e1fff5",
   },
   title: {
     fontSize: 30,

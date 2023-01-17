@@ -43,7 +43,12 @@ export default function NewsScreen() {
               <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
                 <Text style={styles.articles}>{item.title}</Text>
                 <Image
-                  style={{ width: 300, height: 200, borderRadius: 10 }}
+                  style={{
+                    width: 250,
+                    height: 150,
+                    borderRadius: 10,
+                    marginLeft: 30,
+                  }}
                   source={{ uri: item.urlToImage }}
                 />
               </TouchableOpacity>
@@ -65,6 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 30,
     marginTop: 10,
+    backgroundColor: "#e1fff5",
   },
   articles: {
     fontSize: 16,
