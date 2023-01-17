@@ -19,7 +19,7 @@ export default function App() {
 
             if (route.name === "Home") {
               iconName = "home";
-            } else if (route.name === "News") {
+            } else if (route.name === "Trending") {
               iconName = "book-open";
             } else if (route.name === "Weather") {
               iconName = "cloud";
@@ -31,7 +31,7 @@ export default function App() {
           inactiveTintColor: "gray",
         })}>
         <Tab.Screen name='Home' component={HomeScreen} />
-        <Tab.Screen name='News' component={NewsScreen} />
+        <Tab.Screen name='Trending' component={NewsScreen} />
         <Tab.Screen name='Weather' component={WeatherScreen} />
       </Tab.Navigator>
     </NavigationContainer>

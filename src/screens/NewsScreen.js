@@ -14,7 +14,7 @@ import axios from "axios";
 export default function NewsScreen() {
   const [news, setNews] = React.useState([]);
   const sources =
-    "cbc-news, globe-and-mail, the-globe-and-mail, ctv-news, global-news";
+    "cbc-news, globe-and-mail, the-globe-and-mail, ctv-news, global-news, cbc-news, ctv-news, ctv-news-channel, ctv-news-at-11, ctv-news-at-5, ctv-news-at-6, ctv-news-at-7, ctv-news-at-8, ctv-news-at-9, ctv-news-at-10, ctv-news-at-12, ctv-news-at-1, ctv-news-at-2, ctv-news-at-3, ctv-news-at-4, ctv-news-at-5, ctv-news-at-6, ctv-news-at-7, ctv-news-at-8, ctv-news-at-9, ctv-news-at-10, ctv-news-at-11, ctv-news-at-12, ctv-news-at-1, ctv-news-at-2, ctv-news-at-3, ctv-news-at-4, ctv-news-at-5, ctv-news-at-6, ctv-news-at-7, ctv-news-at-8, ctv-news-at-9, ctv-news-at-10, ctv-news-at-11, ctv-news-at-12, ctv-news-at-1, ctv-news-at-2, ctv-news-at-3, ctv-news-at-4, ctv-news-at-5, ctv-news-at-6, ctv-news-at-7, ctv-news-at-8, ctv-news-at-9, ctv-news-at-10, ctv-news-at-11, ctv-news-at-12, ctv-news-at-1, ctv-news-at-2, ctv-news-at-3, ctv-news-at-4, ctv-news-at-5, ctv-news-at-6, ctv-news-at-7, ctv-news-at-8, ctv-news-at-9, ctv-news-at-10, ctv-news-at-11, ctv-news-at-12, ctv-news-at-1, ctv-news-at-2, ctv-news-at-3, ctv-news-at-4, ctv-news-at-5, ctv-news-at-6, ctv-news-at-7, ctv-news-at-8, ctv-news-at-9, ctv-news-at-10, ctv-news-at-11, ctv-news-at-12, ctv-news-at-1, ctv-news-at";
   const limit = 6;
 
   React.useEffect(() => {
@@ -31,7 +31,9 @@ export default function NewsScreen() {
 
   return (
     <View style={styles.news_container}>
-      <Text style={{ fontSize: 20, fontWeight: "bold" }}>Today in Canada</Text>
+      <Text style={{ fontSize: 30, fontWeight: "bold", color: "purple" }}>
+        Today in Canada
+      </Text>
       <FlatList
         data={news}
         keyExtractor={(item) => item.url}
@@ -56,10 +58,13 @@ export default function NewsScreen() {
 const styles = StyleSheet.create({
   news_container: {
     flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignContent: "center",
     alignItems: "center",
     justifyContent: "center",
-    padding: 10,
-    marginTop: 40,
+    padding: 30,
+    marginTop: 10,
   },
   articles: {
     fontSize: 16,

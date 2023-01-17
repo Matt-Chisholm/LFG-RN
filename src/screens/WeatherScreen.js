@@ -128,7 +128,12 @@ export default function WeatherScreen() {
         style={{ marginBottom: 20 }}
       />
       {errorMsg && <Text style={styles.error}>{errorMsg}</Text>}
-      {!weatherData && <ActivityIndicator size='large' color='#0000ff' />}
+      {!weatherData && !errorMsg && (
+        <View>
+          <ActivityIndicator size='large' color='#0000ff' />
+          <Text style={styles.description}>Loading your local weather</Text>
+        </View>
+      )}
       {weatherData && (
         <View style={styles.weather_container}>
           {search === "" && <Text style={styles.title}>Current Location</Text>}
@@ -158,9 +163,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 20,
+    color: "purple",
   },
   weather_container: {
     alignItems: "center",
