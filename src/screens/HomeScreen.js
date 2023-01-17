@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 
 export default function HomeScreen() {
@@ -50,7 +50,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>{getCurrentTime()}</Text>
         <Text style={styles.date}>{getCurrentDate()}</Text>
@@ -63,11 +63,19 @@ export default function HomeScreen() {
         To get started, please select the "Weather" or "News" tab at the bottom
         of the screen.
       </Text>
+      <Image
+        style={{ width: 300, height: 300, alignSelf: "center", marginTop: 20 }}
+        source={require("../../assets/vic.jpg")}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#98f2d5",
+    flex: 1,
+  },
   header: {
     fontSize: 30,
     fontWeight: "bold",
